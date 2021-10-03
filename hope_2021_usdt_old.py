@@ -1,4 +1,3 @@
-
 # /usr/bin/env python
 # -*- coding: UTF-8 -*-
 import datetime
@@ -53,7 +52,10 @@ data_symbol_more_than_seven_day_and_less_than_twenty_five_day_dict = {}
 data_symbol_usdt_list_short_line_dict = {}
 data_symbol_usdt_list_median_line_dict = {}
 data_symbol_usdt_list_long_line_dict = {}
-data_symbol_less_than_seven_day = []
+dat_symbol_usdt_list_sma5_line_dict = {}
+dat_symbol_usdt_list_sma10_line_dict = {}
+dat_symbol_usdt_list_sma20_line_dict = {}
+data_symbol_less_than_five_day = []
 
 for data_symbol_usdt_list_index in data_symbol_usdt_list:
     log.logger.debug(str("符號:"+data_symbol_usdt_list_index))
@@ -70,63 +72,52 @@ for data_symbol_usdt_list_index in data_symbol_usdt_list:
     data_symbol_usdt_list_close_numpy = np.array(
         data_symbol_usdt_list_close_list)
     log.logger.debug(str("收盤價:"+str(data_symbol_usdt_list_close_numpy[-1])))
-    if len(data_symbol_usdt_list_close_numpy) >= 7:
+    if len(data_symbol_usdt_list_close_numpy) >= 5:
         log.logger.debug(str("符合條件1"))
-        sma7_numpy = talib.SMA(data_symbol_usdt_list_close_numpy, 7)
-        if data_symbol_usdt_list_close_numpy[-1] <= sma7_numpy[-1]:
+        sma5_numpy = talib.SMA(data_symbol_usdt_list_close_numpy, 5)
+        if data_symbol_usdt_list_close_numpy[-1] <= sma5_numpy[-1]:
             log.logger.debug(str("符合條件2"))
             rsi6_numpy = talib.RSI(data_symbol_usdt_list_close_numpy, 6)
-            data_symbol_usdt_list_short_line_dict[data_symbol_usdt_list_index] = rsi6_numpy[-1]
-            if len(data_symbol_usdt_list_close_numpy) >= 25:
+            dat_symbol_usdt_list_sma5_line_dict[data_symbol_usdt_list_index] = rsi6_numpy[-1]
+            if len(data_symbol_usdt_list_close_numpy) >= 10:
                 log.logger.debug(str("符合條件3"))
-                sma25_numpy = talib.SMA(data_symbol_usdt_list_close_numpy, 25)
-                if sma7_numpy[-1] <= sma25_numpy[-1]:
+                sma10_numpy = talib.SMA(data_symbol_usdt_list_close_numpy, 10)
+                if sma5_numpy[-1] <= sma10_numpy[-1]:
                     log.logger.debug(str("符合條件4"))
                     rsi6_numpy = talib.RSI(
                         data_symbol_usdt_list_close_numpy, 6)
-                    data_symbol_usdt_list_median_line_dict[data_symbol_usdt_list_index] = rsi6_numpy[-1]
-                    if len(data_symbol_usdt_list_close_numpy) >= 99:
+                    dat_symbol_usdt_list_sma10_line_dict[data_symbol_usdt_list_index] = rsi6_numpy[-1]
+                    if len(data_symbol_usdt_list_close_numpy) >= 20:
                         log.logger.debug(str("符合條件5"))
-                        sma99_numpy = talib.SMA(
-                            data_symbol_usdt_list_close_numpy, 99)
-                        if sma25_numpy[-1] <= sma99_numpy[-1]:
+                        sma20_numpy = talib.SMA(
+                            data_symbol_usdt_list_close_numpy, 20)
+                        if sma10_numpy[-1] <= sma20_numpy[-1]:
                             log.logger.debug(str("符合條件6"))
                             rsi6_numpy = talib.RSI(
                                 data_symbol_usdt_list_close_numpy, 6)
-                            data_symbol_usdt_list_long_line_dict[data_symbol_usdt_list_index] = rsi6_numpy[-1]
-            else:
-                rsi6_numpy = talib.RSI(data_symbol_usdt_list_close_numpy, 6)
-                data_symbol_more_than_seven_day_and_less_than_twenty_five_day_dict[
-                    data_symbol_usdt_list_index] = rsi6_numpy[-1]
-    else:
-        data_symbol_less_than_seven_day.append(data_symbol_usdt_list_index)
-    print()
-log.logger.debug(
-    str("符合兩個條件的幣數量:"+str(len(data_symbol_usdt_list_short_line_dict))))
-if(len(data_symbol_usdt_list_short_line_dict) >= 0):
-    data_symbol_usdt_list_short_line_tuple_sort = sorted(
-        data_symbol_usdt_list_short_line_dict.items(), key=lambda item: item[1])
-    log.logger.debug(str(data_symbol_usdt_list_short_line_tuple_sort))
-log.logger.debug(
-    str("符合四個條件的幣數量:"+str(len(data_symbol_usdt_list_median_line_dict))))
-if(len(data_symbol_usdt_list_median_line_dict) >= 0):
-    data_symbol_usdt_list_median_line_tuple_sort = sorted(
-        data_symbol_usdt_list_median_line_dict.items(), key=lambda item: item[1])
-    log.logger.debug(str(data_symbol_usdt_list_median_line_tuple_sort))
-log.logger.debug(
-    str("符合六個條件的幣數量:"+str(len(data_symbol_usdt_list_long_line_dict))))
-if(len(data_symbol_usdt_list_long_line_dict) >= 0):
-    data_symbol_usdt_list_long_line_tuple_sort = sorted(
-        data_symbol_usdt_list_long_line_dict.items(), key=lambda item: item[1])
-    log.logger.debug(str(data_symbol_usdt_list_long_line_tuple_sort))
-log.logger.debug(str("大於7天小與25天的數量:" +
-                     str(len(data_symbol_more_than_seven_day_and_less_than_twenty_five_day_dict))))
-if(len(data_symbol_more_than_seven_day_and_less_than_twenty_five_day_dict) >= 0):
-    data_symbol_more_than_seven_day_and_less_than_twenty_five_day_tuple_sort = sorted(
-        data_symbol_more_than_seven_day_and_less_than_twenty_five_day_dict.items(), key=lambda item: item[1])
-    log.logger.debug(
-        str(data_symbol_more_than_seven_day_and_less_than_twenty_five_day_tuple_sort))
+                            dat_symbol_usdt_list_sma20_line_dict[data_symbol_usdt_list_index] = rsi6_numpy[-1]
+    elif len(data_symbol_usdt_list_close_numpy) < 5:
+        data_symbol_less_than_five_day.append(data_symbol_usdt_list_index)
 
-log.logger.debug(str("小於7天的幣數量:"+str(len(data_symbol_less_than_seven_day))))
-if(len(data_symbol_less_than_seven_day) >= 0):
-    log.logger.debug(str(data_symbol_less_than_seven_day))
+log.logger.debug(
+    str("符合兩個條件的幣數量:"+str(len(dat_symbol_usdt_list_sma5_line_dict))))
+if(len(dat_symbol_usdt_list_sma5_line_dict) >= 0):
+    dat_symbol_usdt_list_sma5_line_dict_tuple_sort = sorted(
+        dat_symbol_usdt_list_sma5_line_dict.items(), key=lambda item: item[1])
+    log.logger.debug(str(dat_symbol_usdt_list_sma5_line_dict_tuple_sort))
+log.logger.debug(
+    str("符合四個條件的幣數量:"+str(len(dat_symbol_usdt_list_sma10_line_dict))))
+if(len(dat_symbol_usdt_list_sma10_line_dict) >= 0):
+    dat_symbol_usdt_list_sma10_line_dict_tuple_sort = sorted(
+        dat_symbol_usdt_list_sma10_line_dict.items(), key=lambda item: item[1])
+    log.logger.debug(str(dat_symbol_usdt_list_sma10_line_dict_tuple_sort))
+log.logger.debug(
+    str("符合六個條件的幣數量:"+str(len(dat_symbol_usdt_list_sma20_line_dict))))
+if(len(dat_symbol_usdt_list_sma20_line_dict) >= 0):
+    dat_symbol_usdt_list_sma20_line_dict_tuple_sort = sorted(
+        dat_symbol_usdt_list_sma20_line_dict.items(), key=lambda item: item[1])
+    log.logger.debug(str(dat_symbol_usdt_list_sma20_line_dict_tuple_sort))
+
+log.logger.debug(str("小於5天的幣數量:"+str(len(data_symbol_less_than_five_day))))
+if(len(data_symbol_less_than_five_day) >= 0):
+    log.logger.debug(str(data_symbol_less_than_five_day))

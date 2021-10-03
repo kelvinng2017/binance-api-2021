@@ -59,7 +59,7 @@ for data_symbol_usdt_list_index in data_symbol_usdt_list:
     log.logger.debug(str("符號:"+data_symbol_usdt_list_index))
     BASE_URL = config['biance_api_setting']['BASE_URL']
     onedayklineindex_url = BASE_URL + '/api/v3/klines' + \
-        '?symbol='+data_symbol_usdt_list_index+'&interval=1d&limit=100'
+        '?symbol='+data_symbol_usdt_list_index+'&interval=30m&limit=100'
     resp = requests.get(onedayklineindex_url)
     data = resp.json()
     data_symbol_usdt_list_close_list = []

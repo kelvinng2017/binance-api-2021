@@ -7,7 +7,7 @@ import numpy as np
 import show_and_save_log_file
 import os
 import configparser
-timeStop = datetime.datetime(2021, 9, 4, 21, 10, 0)
+timeStop = datetime.datetime(2021, 9, 15, 21, 10, 0)
 
 
 while datetime.datetime.now() < timeStop:
