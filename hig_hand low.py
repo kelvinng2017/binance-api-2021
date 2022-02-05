@@ -10,6 +10,7 @@ import configparser
 import logging
 import logging.handlers as log_handler
 import os
+import json
 timeStop = datetime.datetime(2021, 11, 25, 21, 10, 0)
 high_hand_logger = logging.getLogger("SYSTEM")
 high_hand_logger.setLevel(logging.DEBUG)
@@ -51,22 +52,12 @@ data_symbol = resp_symbol.json()
 
 log.logger.debug("program start")
 
-data_symbol_usdt_list = []
 
-for data_symbol_index in range(len(data_symbol)):
-    if(len(data_symbol[data_symbol_index]["symbol"][-4:]) >= 4):
-        if(data_symbol[data_symbol_index]["symbol"][-4:] == "USDT"):
-            if(data_symbol[data_symbol_index]["symbol"].find("DOWN") == -1):
-                if(data_symbol[data_symbol_index]["symbol"].find("UP") == -1):
-                    if(data_symbol[data_symbol_index]["symbol"].find("BEAR") == -1):
-                        if(data_symbol[data_symbol_index]["symbol"].find("BULL") == -1):
-                            if(data_symbol[data_symbol_index]["symbol"][0:3] != "VEN"):
-                                if(data_symbol[data_symbol_index]["symbol"][0:3] != "MCO"):
-                                    if(data_symbol[data_symbol_index]["symbol"][0:3] != "BCC"):
-                                        if(data_symbol[data_symbol_index]["symbol"][0:2] != "HC"):
-                                            # log.logger.debug(str(data_symbol[data_symbol_index]["symbol"]))
-                                            data_symbol_usdt_list.append(
-                                                data_symbol[data_symbol_index]["symbol"])
+f = open('./symbol.json')
+symbol_data = json.load(f)
+data_symbol_usdt_list = symbol_data.get("symbol")
+print(type(data_symbol_usdt_list))
+
 count_hight_hand_first_times = {}
 while datetime.datetime.now() < timeStop:
     tradces_dict = {}

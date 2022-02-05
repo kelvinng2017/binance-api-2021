@@ -176,14 +176,14 @@ log.logger.debug(str("小於5天的幣數量:"+str(len(data_symbol_less_than_fiv
 if(len(data_symbol_less_than_five_day) >= 0):
     log.logger.debug(str(data_symbol_less_than_five_day))
 
-# dat_symbol_usdt_list_sma99_line_dict_tuple_sort_normal = []
-# for dat_symbol_usdt_list_sma99_line_dict_tuple_sort_normal_index in range(len(dat_symbol_usdt_list_sma99_line_dict_tuple_sort)):
-#     dat_symbol_usdt_list_sma99_line_dict_tuple_sort_normal.append(
-#         dat_symbol_usdt_list_sma99_line_dict_tuple_sort[dat_symbol_usdt_list_sma99_line_dict_tuple_sort_normal_index][0])
+dat_symbol_usdt_list_sma99_line_dict_tuple_sort_normal = []
+for dat_symbol_usdt_list_sma99_line_dict_tuple_sort_normal_index in range(len(dat_symbol_usdt_list_sma99_line_dict_tuple_sort)):
+    dat_symbol_usdt_list_sma99_line_dict_tuple_sort_normal.append(
+        dat_symbol_usdt_list_sma99_line_dict_tuple_sort[dat_symbol_usdt_list_sma99_line_dict_tuple_sort_normal_index][0])
 
 
-# symbol_dict = {}
-# symbol_dict["symbol"] = dat_symbol_usdt_list_sma99_line_dict_tuple_sort_normal
-# print(symbol_dict)
-# with open("symbol.json", "w") as outfile:
-#     json.dump(symbol_dict, outfile)
+symbol_dict = {}
+symbol_dict["symbol"] = dat_symbol_usdt_list_sma99_line_dict_tuple_sort_normal
+print(symbol_dict)
+with open("symbol.json", "w") as outfile:
+    json.dump(symbol_dict, outfile)
